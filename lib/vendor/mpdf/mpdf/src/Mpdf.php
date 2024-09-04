@@ -6557,7 +6557,7 @@ class Mpdf implements \Psr\Log\LoggerAwareInterface
 			$lastfontreqstyle = null;
 			$lastfontstyle = null;
 		}
-		if ($blockdir == 'ltr' && strpos($lastfontreqstyle, "I") !== false && strpos($lastfontstyle, "I") === false) { // Artificial italic
+		if ($blockdir == 'ltr' && $lastfontreqstyle&& str_contains($lastfontreqstyle, "I") && !str_contains($lastfontstyle, "I")) { // Artificial italic
 			$lastitalic = $this->FontSize * 0.15 * Mpdf::SCALE;
 		} else {
 			$lastitalic = 0;
@@ -15241,7 +15241,7 @@ class Mpdf implements \Psr\Log\LoggerAwareInterface
 		}
 		$this->ResetMargins();
 		$this->pageoutput[$this->page] = [];
-		$this->y = (($end * 1000) % 1000000) / 1000; // mod changes operands to integers before processing
+		$this->y = (round($end * 1000) % 1000000) / 1000;  // mod changes operands to integers before processing
 	}
 
 	// Added mPDF 3.0 Float DIV
